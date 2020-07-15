@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
-    public $with = ['categories'];
-
     public function getRouteKeyName()
     {
         return 'slug';
