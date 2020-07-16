@@ -17,6 +17,11 @@ class Money
         $this->money = new BaseMoney($value, new Currency('PEN'));
     }
 
+    public function amount()
+    {
+        return $this->money->getAmount();
+    }
+
     public function formatted()
     {
         $formatter = new IntlMoneyFormatter(
