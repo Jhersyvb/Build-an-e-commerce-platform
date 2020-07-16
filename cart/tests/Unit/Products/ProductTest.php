@@ -32,9 +32,7 @@ class ProductTest extends TestCase
         $product = factory(Product::class)->create();
 
         $product->variations()->save(
-            factory(ProductVariation::class)->create([
-                'product_id' => $product->id,
-            ])
+            factory(ProductVariation::class)->create()
         );
 
         $this->assertInstanceOf(ProductVariation::class, $product->variations->first());
