@@ -2,6 +2,7 @@
 
 namespace App\Scoping;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Scoping\Contracts\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +18,7 @@ class Scoper
 
     public function apply(Builder $builder, array $scopes)
     {
-        foreach ($scopes as $key => $scope) {
+        foreach ($this->limitScopes($scopes) as $key => $scope) {
             if (!$scope instanceof Scope) {
                 continue;
             }
@@ -26,5 +27,13 @@ class Scoper
         }
 
         return $builder;
+    }
+
+    protected function limitScopes(array $scopes)
+    {
+        return Arr::only(
+            $scopes,
+            array_keys($this->request->all())
+        );
     }
 }
