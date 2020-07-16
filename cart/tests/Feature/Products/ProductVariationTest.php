@@ -4,6 +4,7 @@ namespace Tests\Feature\Products;
 
 use App\Cart\Money;
 use Tests\TestCase;
+use App\Models\Stock;
 use App\Models\Product;
 use App\Models\ProductVariation;
 use App\Models\ProductVariationType;
@@ -14,16 +15,16 @@ class ProductVariationTest extends TestCase
 {
     public function test_it_has_one_variation_type()
     {
-        $variaton = factory(ProductVariation::class)->create();
+        $variation = factory(ProductVariation::class)->create();
 
-        $this->assertInstanceOf(ProductVariationType::class, $variaton->type);
+        $this->assertInstanceOf(ProductVariationType::class, $variation->type);
     }
 
     public function test_it_belongs_to_a_product()
     {
-        $variaton = factory(ProductVariation::class)->create();
+        $variation = factory(ProductVariation::class)->create();
 
-        $this->assertInstanceOf(Product::class, $variaton->product);
+        $this->assertInstanceOf(Product::class, $variation->product);
     }
 
     public function test_it_returns_a_money_instance_for_the_price()
@@ -68,5 +69,16 @@ class ProductVariationTest extends TestCase
         ]);
 
         $this->assertTrue($variation->priceVaries());
+    }
+
+    public function test_it_has_many_stocks()
+    {
+        $variation = factory(ProductVariation::class)->create();
+
+        $variation->stocks()->save(
+            factory(Stock::class)->make()
+        );
+
+        $this->assertInstanceOf(Stock::class, $variation->stocks->first());
     }
 }
