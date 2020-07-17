@@ -20,16 +20,6 @@ class User extends Authenticatable implements JWTSubject
         'name', 'email', 'password',
     ];
 
-    public function getJWTIdentifier()
-    {
-        return $this->id;
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -47,4 +37,23 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->password = bcrypt($user->password);
+        });
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->id;
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }
