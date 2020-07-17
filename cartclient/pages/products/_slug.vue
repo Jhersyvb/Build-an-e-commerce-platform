@@ -35,13 +35,13 @@
                 v-model="form.variation"
               />
 
-              {{ form }}
-
               <div class="field has-addons" v-if="form.variation">
                 <div class="control">
                   <div class="select is-fullwidth">
-                    <select name="" id="">
-                      <option value="">1</option>
+                    <select name="" id="" v-model="form.quantity">
+                      <option v-for="x in parseInt(form.variation.stock_count)" :key="x" :value="x">
+                        {{ x }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -73,6 +73,12 @@ export default {
 
   components: {
     ProductVariation
+  },
+
+  watch: {
+    'form.variation'() {
+      this.form.quantity = 1
+    }
   },
 
   async asyncData({ params, app }) {
