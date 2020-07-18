@@ -16,17 +16,17 @@ class CartIndexTest extends TestCase
             ->assertStatus(401);
     }
 
-    // public function test_it_shows_products_in_the_user_cart()
-    // {
-    //     $user = factory(User::class)->create();
+    public function test_it_shows_products_in_the_user_cart()
+    {
+        $user = factory(User::class)->create();
 
-    //     $user->cart()->sync(
-    //         $product = factory(ProductVariation::class)->create()
-    //     );
+        $user->cart()->sync(
+            $product = factory(ProductVariation::class)->create()
+        );
 
-    //     $response = $this->jsonAs($user, 'GET', 'api/cart')
-    //         ->assertJsonFragment([
-    //             'id' => $product->id,
-    //         ]);
-    // }
+        $response = $this->jsonAs($user, 'GET', 'api/cart')
+            ->assertJsonFragment([
+                'id' => $product->id,
+            ]);
+    }
 }

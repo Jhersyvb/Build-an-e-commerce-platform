@@ -56,7 +56,7 @@
           <template v-else>
             <a href="#" class="navbar-item">{{ $auth.user.name }}</a>
             <a href="#" class="navbar-item">Orders</a>
-            <a href="#" class="navbar-item">Cart (0)</a>
+            <a href="#" class="navbar-item">Cart ({{ cartCount }})</a>
           </template>
         </div>
       </div>
@@ -70,7 +70,8 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      categories: 'categories'
+      categories: 'categories',
+      cartCount: 'cart/count'
     })
   }
 }
