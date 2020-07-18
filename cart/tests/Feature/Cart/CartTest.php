@@ -25,4 +25,25 @@ class CartTest extends TestCase
 
         $this->assertCount(1, $user->fresh()->cart);
     }
+
+    public function test_it_increments_quantity_when_adding_more_products()
+    {
+        $product = factory(ProductVariation::class)->create();
+
+        $cart = new Cart(
+            $user = factory(User::class)->create()
+        );
+
+        $cart->add([
+            ['id' => $product->id, 'quantity' => 1]
+        ]);
+
+        $cart = new Cart($user->fresh());
+
+        $cart->add([
+            ['id' => $product->id, 'quantity' => 1]
+        ]);
+
+        $this->assertEquals($user->fresh()->cart->first()->pivot->quantity, 2);
+    }
 }
