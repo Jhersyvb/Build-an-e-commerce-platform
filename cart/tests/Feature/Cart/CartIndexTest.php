@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Cart;
 
+use App\Cart\Money;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\ProductVariation;
@@ -37,6 +38,26 @@ class CartIndexTest extends TestCase
         $response = $this->jsonAs($user, 'GET', 'api/cart')
             ->assertJsonFragment([
                 'empty' => true,
+            ]);
+    }
+
+    public function test_it_shows_a_formatted_subtotal()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->jsonAs($user, 'GET', 'api/cart')
+            ->assertJsonFragment([
+                'subtotal' => "S/ 0.00",
+            ]);
+    }
+
+    public function test_it_shows_a_formatted_total()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->jsonAs($user, 'GET', 'api/cart')
+            ->assertJsonFragment([
+                'total' => "S/ 0.00",
             ]);
     }
 }
