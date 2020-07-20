@@ -3,7 +3,7 @@
     <td width="120">
       <img src="http://via.placeholder.com/60x60" alt="" />
     </td>
-    <td>{{ product.product.name }} / {{ product.name }}</td>
+    <td>{{ product.product.name }} / {{ product.type }} {{ product.name }}</td>
     <td width="160">
       <div class="field">
         <div class="control">
