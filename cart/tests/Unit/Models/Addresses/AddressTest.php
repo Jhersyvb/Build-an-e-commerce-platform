@@ -41,6 +41,6 @@ class AddressTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->assertFalse((bool)$oldAddress->fresh()->default);
+        $this->assertFalse($oldAddress->fresh()->default);
     }
 }

@@ -15,6 +15,10 @@ class Address extends Model
         'default',
     ];
 
+    protected $casts = [
+        'default' => 'boolean',
+    ];
+
     public static function boot()
     {
         parent::boot();
