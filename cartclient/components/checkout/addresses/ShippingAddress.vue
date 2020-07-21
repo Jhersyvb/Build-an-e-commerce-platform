@@ -68,6 +68,12 @@ export default {
     }
   },
 
+  watch: {
+    selectedAddress(address) {
+      this.$emit('input', address.id)
+    }
+  },
+
   created() {
     if (this.addresses.length) {
       this.switchAddress(this.defaultAddress)
