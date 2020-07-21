@@ -1,9 +1,12 @@
+import queryString from 'query-string'
+
 export const state = () => ({
   products: [],
   empty: true,
   subtotal: null,
   total: null,
-  changed: false
+  changed: false,
+  shipping: null
 })
 
 export const getters = {
@@ -29,6 +32,10 @@ export const getters = {
 
   changed (state) {
     return state.changed
+  },
+
+  shipping (state) {
+    return state.shipping
   }
 }
 
@@ -51,12 +58,22 @@ export const mutations = {
 
   SET_CHANGED (state, changed) {
     state.changed = changed
+  },
+
+  SET_SHIPPING (state, shipping) {
+    state.shipping = shipping
   }
 }
 
 export const actions = {
-  async getCart ({ commit }) {
-    let response = await this.$axios.$get('cart')
+  async getCart ({ state, commit }) {
+    let query = {}
+
+    if (state.shipping) {
+      query.shipping_method_id = state.shipping.id
+    }
+
+    let response = await this.$axios.$get(`cart?${queryString.stringify(query)}`)
 
     commit('SET_PRODUCTS', response.data.products)
     commit('SET_EMPTY', response.meta.empty)
@@ -87,5 +104,9 @@ export const actions = {
     })
 
     dispatch('getCart')
+  },
+
+  async setShipping ({ commit }, shipping) {
+    commit('SET_SHIPPING', shipping)
   }
 }
