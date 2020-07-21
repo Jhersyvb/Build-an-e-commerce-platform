@@ -10,6 +10,15 @@ use App\Models\ShippingMethod;
 
 class OrderTest extends TestCase
 {
+    public function test_it_has_a_default_status_of_pending()
+    {
+        $order = factory(Order::class)->create([
+            'user_id' => factory(User::class)->create()->id,
+        ]);
+
+        $this->assertEquals($order->status, Order::PENDING);
+    }
+
     public function test_it_belongs_to_user()
     {
         $order = factory(Order::class)->create([
