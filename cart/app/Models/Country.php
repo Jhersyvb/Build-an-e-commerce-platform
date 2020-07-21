@@ -12,4 +12,9 @@ class Country extends Model
         'code',
         'name',
     ];
+
+    public function shippingMethods()
+    {
+        return $this->belongsToMany(ShippingMethod::class);
+    }
 }
