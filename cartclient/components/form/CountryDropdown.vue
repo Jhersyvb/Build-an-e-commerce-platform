@@ -1,6 +1,7 @@
 <template>
   <div class="select is-fullwidth">
     <select @change="changed">
+      <option value="">Please select</option>
       <option v-for="country in countries" :key="country.id" :value="country.id">
         {{ country.name }}
       </option>
