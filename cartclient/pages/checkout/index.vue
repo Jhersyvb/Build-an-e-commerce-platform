@@ -64,7 +64,11 @@
 
           <article class="message">
             <div class="message-body">
-              <button class="button is-info is-fullwidth is-medium" :disabled="empty">
+              <button
+                class="button is-info is-fullwidth is-medium"
+                :disabled="empty || submitting"
+                @click.prevent="order"
+              >
                 Place order
               </button>
             </div>
@@ -73,7 +77,11 @@
         <div class="column is-one-quarter">
           <article class="message">
             <div class="message-body">
-              <button class="button is-info is-fullwidth is-medium" :disabled="empty">
+              <button
+                class="button is-info is-fullwidth is-medium"
+                :disabled="empty || submitting"
+                @click.prevent="order"
+              >
                 Place order
               </button>
             </div>
@@ -98,6 +106,7 @@ export default {
 
   data() {
     return {
+      submitting: false,
       addresses: [],
       shippingMethods: [],
       form: {
@@ -148,6 +157,23 @@ export default {
       this.shippingMethods = response.data
 
       return response
+    },
+
+    async order() {
+      this.submitting = true
+
+      try {
+        await this.$axios.$post('orders', {
+          ...this.form,
+          shipping_method_id: this.shippingMethodId
+        })
+
+        await this.getCart()
+
+        this.$router.replace({ name: 'orders' })
+      } catch (error) {
+        //
+      }
     }
   },
 
