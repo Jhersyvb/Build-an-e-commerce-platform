@@ -41,15 +41,14 @@ export default {
     }
   },
 
-  data() {
-    return {
-      quantity: this.product.quantity
-    }
-  },
-
-  watch: {
-    quantity(quantity) {
-      this.update({ productId: this.product.id, quantity })
+  computed: {
+    quantity: {
+      get() {
+        return this.product.quantity
+      },
+      set(quantity) {
+        this.update({ productId: this.product.id, quantity })
+      }
     }
   },
 
