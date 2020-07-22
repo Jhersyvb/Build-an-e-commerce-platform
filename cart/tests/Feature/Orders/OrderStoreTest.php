@@ -120,6 +120,7 @@ class OrderStoreTest extends TestCase
 
         $this->assertDatabaseHas('order_product_variation', [
             'product_variation_id' => $product->id,
+            'order_id' => json_decode($response->getContent())->data->id,
         ]);
     }
 
@@ -159,7 +160,9 @@ class OrderStoreTest extends TestCase
             'shipping_method_id' => $shipping->id,
         ]);
 
-        Event::assertDispatched(OrderCreated::class);
+        Event::assertDispatched(OrderCreated::class, function ($event) use ($response) {
+            return $event->order->id === json_decode($response->getContent())->data->id;
+        });
     }
 
     public function test_it_empties_the_cart_when_ordering()
