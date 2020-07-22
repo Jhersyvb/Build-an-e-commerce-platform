@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Address;
 use App\Models\ShippingMethod;
+use App\Models\ProductVariation;
 
 class OrderTest extends TestCase
 {
@@ -44,5 +45,37 @@ class OrderTest extends TestCase
         ]);
 
         $this->assertInstanceOf(ShippingMethod::class, $order->shippingMethod);
+    }
+
+    public function test_it_has_many_products()
+    {
+        $order = factory(Order::class)->create([
+            'user_id' => factory(User::class)->create()->id,
+        ]);
+
+        $order->products()->attach(
+            factory(ProductVariation::class)->create(),
+            [
+                'quantity' => 1,
+            ]
+        );
+
+        $this->assertInstanceOf(ProductVariation::class, $order->products->first());
+    }
+
+    public function test_it_has_a_quantity_attached_to_the_products()
+    {
+        $order = factory(Order::class)->create([
+            'user_id' => factory(User::class)->create()->id,
+        ]);
+
+        $order->products()->attach(
+            factory(ProductVariation::class)->create(),
+            [
+                'quantity' => $quantity = 2,
+            ]
+        );
+
+        $this->assertEquals($order->products->first()->pivot->quantity, $quantity);
     }
 }
