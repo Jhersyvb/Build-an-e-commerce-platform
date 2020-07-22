@@ -80,4 +80,35 @@ class OrderStoreTest extends TestCase
             'address_id' => $address->id,
         ])->assertJsonValidationErrors(['shipping_method_id']);
     }
+
+    public function test_it_can_create_an_order()
+    {
+        $user = factory(User::class)->create();
+
+        list($address, $shipping) = $this->orderDependencies($user);
+
+        $this->jsonAs($user, 'POST', 'api/orders', [
+            'address_id' => $address->id,
+            'shipping_method_id' => $shipping->id,
+        ]);
+
+        $this->assertDatabaseHas('orders', [
+            'user_id' => $user->id,
+            'address_id' => $address->id,
+            'shipping_method_id' => $shipping->id,
+        ]);
+    }
+
+    protected function orderDependencies(User $user)
+    {
+        $address = factory(Address::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $shipping = factory(ShippingMethod::class)->create();
+
+        $shipping->countries()->attach($address->country);
+
+        return [$address, $shipping];
+    }
 }
