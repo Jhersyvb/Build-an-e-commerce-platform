@@ -148,7 +148,8 @@ export default {
   methods: {
     ...mapActions({
       setShipping: 'cart/setShipping',
-      getCart: 'cart/getCart'
+      getCart: 'cart/getCart',
+      flash: 'alert/flash'
     }),
 
     async getShippingMethodsForAddress(addressId) {
@@ -172,8 +173,11 @@ export default {
 
         this.$router.replace({ name: 'orders' })
       } catch (error) {
-        //
+        this.flash(error.response.data.message)
+        this.getCart()
       }
+
+      this.submitting = false
     }
   },
 
