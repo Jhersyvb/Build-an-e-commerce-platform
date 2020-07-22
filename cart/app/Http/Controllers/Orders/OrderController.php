@@ -9,25 +9,21 @@ use App\Http\Requests\Orders\OrderStoreRequest;
 
 class OrderController extends Controller
 {
-    protected $cart;
-
-    public function __construct(Cart $cart)
+    public function __construct()
     {
         $this->middleware(['auth:api']);
-
-        $this->cart = $cart;
     }
 
-    public function store(OrderStoreRequest $request)
+    public function store(OrderStoreRequest $request, Cart $cart)
     {
-        $order = $this->createOrder($request);
+        $order = $this->createOrder($request, $cart);
     }
 
-    protected function createOrder(Request $request)
+    protected function createOrder(Request $request, Cart $cart)
     {
         $request->user()->orders()->create(
             array_merge($request->only(['address_id', 'shipping_method_id']), [
-                'subtotal' => $this->cart->subtotal()->amount(),
+                'subtotal' => $cart->subtotal()->amount(),
             ])
         );
     }
