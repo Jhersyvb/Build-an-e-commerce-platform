@@ -5,8 +5,10 @@
       {{ order.created_at }}
     </td>
     <td>
-      <div v-for="product in products" :key="product.id">
-        <a href="">Product 1</a>
+      <div v-for="variation in products" :key="variation.id">
+        <nuxt-link :to="{ name: 'products-slug', params: { slug: variation.product.slug } }">
+          {{ variation.product.name }} ({{ variation.name }}) - {{ variation.type }}
+        </nuxt-link>
       </div>
       <template v-if="moreProducts > 0"> and {{ moreProducts }} more </template>
     </td>
