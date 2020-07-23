@@ -27,5 +27,7 @@ class PaymentMethodController extends Controller
         $card = $this->gateway->withUser($request->user())
             ->createCustomer()
             ->addCard($request->token);
+
+        dd($card);
     }
 }
