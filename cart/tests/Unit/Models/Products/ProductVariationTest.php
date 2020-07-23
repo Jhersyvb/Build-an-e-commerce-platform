@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Products;
+namespace Tests\Unit\Models\Products;
 
 use App\Cart\Money;
 use Tests\TestCase;
