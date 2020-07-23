@@ -16,7 +16,7 @@ class CreatePaymentMethodsTable extends Migration
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index();
-            $table->string('cart_type')->nullable();
+            $table->string('card_type')->nullable();
             $table->string('last_four')->nullable();
             $table->boolean('default')->default(true);
             $table->string('provider_id')->unique();

@@ -10,7 +10,7 @@ class PaymentMethod extends Model
     use CanBeDefault;
 
     protected $fillable = [
-        'cart_type',
+        'card_type',
         'last_four',
         'provider_id',
         'default',
