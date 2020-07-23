@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Address;
+use App\Models\PaymentMethod;
 use App\Models\ProductVariation;
 
 class UserTest extends TestCase
@@ -64,5 +65,16 @@ class UserTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Order::class, $user->orders->first());
+    }
+
+    public function test_it_has_many_payment_methods()
+    {
+        $user = factory(User::class)->create();
+
+        factory(PaymentMethod::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $this->assertInstanceOf(PaymentMethod::class, $user->paymentMethods->first());
     }
 }
