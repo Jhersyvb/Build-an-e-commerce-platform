@@ -55,7 +55,7 @@
           </template>
           <template v-else>
             <a href="#" class="navbar-item">{{ $auth.user.name }}</a>
-            <a href="#" class="navbar-item">Orders</a>
+            <nuxt-link :to="{ name: 'orders' }" class="navbar-item">Orders</nuxt-link>
             <nuxt-link :to="{ name: 'cart' }" class="navbar-item">Cart ({{ cartCount }})</nuxt-link>
           </template>
         </div>
