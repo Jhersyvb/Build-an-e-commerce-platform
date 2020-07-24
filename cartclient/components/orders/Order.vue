@@ -20,13 +20,17 @@
 </template>
 
 <script>
-import OrderStatusPaymentFailed from '@/components/orders/statuses/OrderStatus-payment_failed'
-import OrderStatusPending from '@/components/orders/statuses/OrderStatus-pending'
+import OrderStatusPaymentFailed from '@/components/orders/statuses/OrderStatusPaymentFailed'
+import OrderStatusPending from '@/components/orders/statuses/OrderStatusPending'
+import OrderStatusProcessing from '@/components/orders/statuses/OrderStatusProcessing'
+import OrderStatusCompleted from '@/components/orders/statuses/OrderStatusCompleted'
 
 export default {
   components: {
     payment_failed: OrderStatusPaymentFailed,
-    pending: OrderStatusPending
+    pending: OrderStatusPending,
+    processing: OrderStatusProcessing,
+    completed: OrderStatusCompleted
   },
 
   props: {
