@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Address;
+use App\Models\Transaction;
 use App\Models\PaymentMethod;
 use App\Models\ShippingMethod;
 use App\Models\ProductVariation;
@@ -87,5 +88,18 @@ class OrderTest extends TestCase
         );
 
         $this->assertEquals($order->products->first()->pivot->quantity, $quantity);
+    }
+
+    public function test_it_has_many_transactions()
+    {
+        $order = factory(Order::class)->create([
+            'user_id' => factory(User::class)->create()->id,
+        ]);
+
+        factory(Transaction::class)->create([
+            'order_id' => $order->id,
+        ]);
+
+        $this->assertInstanceOf(Transaction::class, $order->transactions->first());
     }
 }
