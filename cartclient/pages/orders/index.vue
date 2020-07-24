@@ -31,6 +31,8 @@ export default {
     Order
   },
 
+  middleware: ['redirectIfGuest'],
+
   data() {
     return {
       orders: []

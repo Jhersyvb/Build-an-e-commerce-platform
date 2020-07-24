@@ -104,6 +104,8 @@ export default {
     PaymentMethods
   },
 
+  middleware: ['redirectIfGuest'],
+
   data() {
     return {
       submitting: false,
