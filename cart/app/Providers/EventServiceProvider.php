@@ -19,6 +19,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         'App\Events\Order\OrderCreated' => [
+            'App\Listeners\Order\ProcessPayment',
             'App\Listeners\Order\EmptyCart',
         ],
     ];
